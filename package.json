@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Server driven for Javascript Engine",
   "main": "lib/main.js",
-  "types": "lib/src/main.d.ts",
+  "types": "types/src/main.d.ts",
   "scripts": {
     "dev": "npm run development",
     "development": "node_modules/.bin/webpack --progress --mode=development --config=webpack.config.js",
