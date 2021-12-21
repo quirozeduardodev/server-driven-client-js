@@ -19,7 +19,7 @@ module.exports = {
     },
     output: {
         filename: 'index.js',
-        libraryTarget: "window",
+        libraryTarget: "umd",
         path: path.resolve(__dirname, 'lib'),
     },
 };
