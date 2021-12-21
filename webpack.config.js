@@ -19,6 +19,7 @@ module.exports = {
     },
     output: {
         filename: 'index.js',
+        libraryTarget: "window",
         path: path.resolve(__dirname, 'lib'),
     },
 };
