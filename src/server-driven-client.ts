@@ -99,26 +99,3 @@ export class ServerDrivenClient {
         this._view$.complete();
     }
 }
-
-
-const serverDrivenClient = new ServerDrivenClient(`
-    <ServerDriven>
-        <Button>
-        </Button>    
-    </ServerDriven>
-    `,
-    `class Some {
-        add() {
-            console.log('added');
-            this.setState({});
-        }
-    }`
-);
-
-serverDrivenClient.view.subscribe(value => {
-   console.log(value);
-});
-
-setTimeout(args => {
-    serverDrivenClient.cmd('add()');
-}, 500);
