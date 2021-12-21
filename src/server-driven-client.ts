@@ -37,7 +37,7 @@ export class ServerDrivenClient {
                     const allDirtyParams = matches[2].trim().split(',');
                     if (allDirtyParams[0].trim().length <= 0 || allDirtyParams[allDirtyParams.length - 1].trim().length <= 0) {
                         /// Valid
-                        console.error(`Invalid params at: ${matches[0]}`);
+                        throw Error(`Invalid params at: ${matches[0]}`);
                     } else {
                         const finalParams = [];
                         for (const dirtyParam of allDirtyParams) {
@@ -83,8 +83,6 @@ export class ServerDrivenClient {
     rebuild(state: { [p: string]: any;}) {
         if (this._controllerInstance || state) {
             for (const [key, value] of Object.entries(state)) {
-                console.log(key, value);
-                console.log(this._controllerInstance);
                 this._controllerInstance[key] = value;
             }
             this._build();
