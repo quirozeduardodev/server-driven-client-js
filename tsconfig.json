@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./lib/",
     "noImplicitAny": true,
     "module": "ES2015",
     "target": "es6",
@@ -9,6 +9,6 @@
     "declaration": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   }
 }

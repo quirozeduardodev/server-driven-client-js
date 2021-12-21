@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Server driven for Javascript Engine",
   "main": "index.js",
+  "types": "",
   "scripts": {
     "dev": "npm run development",
     "development": "node_modules/.bin/webpack --progress --mode=development --config=webpack.config.js",
@@ -25,5 +26,8 @@
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "xml-js": "^1.6.11"
-  }
+  },
+  "files": [
+    "lib/**/*"
+  ]
 }
