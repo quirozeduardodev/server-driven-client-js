@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/main.ts',
+    entry: './src/index.ts',
     module: {
         rules: [
             {
@@ -18,7 +18,7 @@ module.exports = {
         }
     },
     output: {
-        filename: 'main.js',
+        filename: 'index.js',
         path: path.resolve(__dirname, 'lib'),
     },
 };
