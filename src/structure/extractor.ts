@@ -18,67 +18,63 @@ export class Extractor {
 
   public static registry: RegistryBuilder[] = [
     {
-      nameMatch: /^Button|button$/,
+      nameMatch: /^(?:Button|button)$/,
       type: 'button'
     },
     {
-      nameMatch: /^Column|column$/,
+      nameMatch: /^(?:Column|column)$/,
       type: 'column'
     },
     {
-      nameMatch: /^Checkbox|checkbox|CheckBox|check-box$/,
+      nameMatch: /^(?:Checkbox|checkbox|CheckBox|check-box)$/,
       type: 'checkbox'
     },
     {
-      nameMatch: /^column$/,
-      type: 'column'
-    },
-    {
-      nameMatch: /^DatePicker|Datepicker|date-picker|datepicker$/,
+      nameMatch: /^(?:DatePicker|Datepicker|date-picker|datepicker)$/,
       type: 'datePicker'
     },
     {
-      nameMatch: /^Dropdown|DropDown|drop-down|dropdown$/,
+      nameMatch: /^(?:Dropdown|DropDown|drop-down|dropdown)$/,
       type: 'dropdown'
     },
     {
-      nameMatch: /^Form|form$/,
+      nameMatch: /^(?:Form|form)$/,
       type: 'form'
     },
     {
-      nameMatch: /^ImagePicker|Imagepicker|image-picker|imagepicker$/,
+      nameMatch: /^(?:ImagePicker|Imagepicker|image-picker|imagepicker)$/,
       type: 'imagePicker'
     },
     {
-      nameMatch: /^Row|row$/,
+      nameMatch: /^(?:Row|row)$/,
       type: 'row'
     },
     {
-      nameMatch: /^ServerDriven|server-driven$/,
+      nameMatch: /^(?:ServerDriven|server-driven)$/,
       type: 'server-driven'
     },
     {
-      nameMatch: /^SignaturePad|Signaturepad|signature-pad|signaturepad$/,
+      nameMatch: /^(?:SignaturePad|Signaturepad|signature-pad|signaturepad)$/,
       type: 'signaturePad'
     },
     {
-      nameMatch: /^Switch|switch$/,
+      nameMatch: /^(?:Switch|switch)$/,
       type: 'switch'
     },
     {
-      nameMatch: /^TagEditor|Tageditor|tag-editor|tageditor$/,
+      nameMatch: /^(?:TagEditor|Tageditor|tag-editor|tageditor)$/,
       type: 'tagEditor'
     },
     {
-      nameMatch: /^Text|text$/,
+      nameMatch: /^(?:Text|text)$/,
       type: 'text'
     },
     {
-      nameMatch: /^TextField|Textfield|text-field|textfield$/,
+      nameMatch: /^(?:TextField|Textfield|text-field|textfield)$/,
       type: 'textField'
     },
     {
-      nameMatch: /^TimePicker|Timepicker|time-picker|timepicker$/,
+      nameMatch: /^(?:TimePicker|Timepicker|time-picker|timepicker)$/,
       type: 'timePicker'
     }
   ];
