@@ -190,21 +190,23 @@ export class Extractor {
   }
 
   private static async _extractOption(elementRaw: ElementRaw): Promise<ElementOption<any>> {
-    if(elementRaw || !elementRaw.name.match('option|Option')) {
+    if(elementRaw && !elementRaw.name.match('option|Option')) {
       throw Error(`${elementRaw.name} is not a valid option`);
     }
     const attributes = elementRaw.attributes ?? {};
+    const children: any[] = elementRaw.elements ?? [];
+
     return {
       value: attributes.value ?? null,
-      label: attributes.label ?? ''
+      label: children.length > 0 ? await this._extractText(children[0]) : (attributes.label ?? '')
     };
   }
 
   private static async _extractText(elementRaw: ElementRaw): Promise<string> {
-    if(!elementRaw || !elementRaw.type.match('text')) {
+    if(elementRaw && !elementRaw.type.match('text')) {
       throw Error(`${elementRaw.type} is not a valid text`);
     }
-    return elementRaw.text ?? '';
+    return elementRaw?.text ?? '';
   }
 
   private static async _extractElements(elementsRaw: ElementRaw[]): Promise<BasicElement<BasicAttributes, BasicEvents>[]> {
