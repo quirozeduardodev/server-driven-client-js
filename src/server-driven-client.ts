@@ -59,15 +59,14 @@ export class ServerDrivenClient {
     }
 
     public async run(): Promise<void> {
+
+        let globalScript = '';
         for (const script of this._scripts) {
-            try {
-                await eval(script);
-            } catch (e) {
-            }
+            globalScript += `${script} `
         }
         if (this._controllerScript && this._xml && this._className) {
-            await eval(`${this._controllerScript}`);
-            this._controllerInstance = await eval(`new ${this._className}()`);
+            globalScript += `${this._controllerScript} return new ${this._className}();`
+            this._controllerInstance = await eval(`${globalScript}`);
             this._controllerInstance.setState = (state: { [p: string]: any;}) => {
                 this.rebuild(state);
             };
