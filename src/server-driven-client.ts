@@ -5,15 +5,17 @@ import * as convert from 'xml-js';
 
 export class ServerDrivenClient {
 
-    private _xml: string | null;
-    private _controllerJS: string | null;
-    private _scripts: string[];
+    private readonly _xml: string | null;
+    private readonly _controllerScript: string | null;
+    private readonly _className: string | null;
+    private readonly _scripts: string[];
 
     private _controllerInstance: any | null = null;
 
-    constructor(xml: string | null, controllerJS: string | null, scripts?: string[]) {
+    constructor(xml: string | null, controllerScript: string | null, className: string | null, scripts?: string[]) {
         this._xml = xml;
-        this._controllerJS = controllerJS;
+        this._controllerScript = controllerScript;
+        this._className = className;
         this._scripts = scripts ?? [];
         this.run();
     }
@@ -58,11 +60,14 @@ export class ServerDrivenClient {
 
     public async run(): Promise<void> {
         for (const script of this._scripts) {
-            await eval(script);
+            try {
+                await eval(script);
+            } catch (e) {
+            }
         }
-        if (this._controllerJS || this._xml) {
-            const classController = await eval(`(${this._controllerJS})`);
-            this._controllerInstance = new classController();
+        if (this._controllerScript && this._xml && this._className) {
+            await eval(`${this._controllerScript}`);
+            this._controllerInstance = await eval(`new ${this._className}()`);
             this._controllerInstance.setState = (state: { [p: string]: any;}) => {
                 this.rebuild(state);
             };
