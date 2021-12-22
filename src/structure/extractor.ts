@@ -201,7 +201,7 @@ export class Extractor {
   }
 
   private static async _extractText(elementRaw: ElementRaw): Promise<string> {
-    if(elementRaw || !elementRaw.type.match('text')) {
+    if(!elementRaw || !elementRaw.type.match('text')) {
       throw Error(`${elementRaw.type} is not a valid text`);
     }
     return elementRaw.text ?? '';
