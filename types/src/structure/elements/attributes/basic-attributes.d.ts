@@ -5,7 +5,7 @@ export interface BasicAttributes {
     height?: Measure;
     backgroundColor?: Color;
 }
-export declare type MeasureType = 'px' | 'percentage' | 'em' | 'rem';
+export declare type MeasureType = 'px' | '%' | 'em' | 'rem';
 export declare class AttLTRB {
     left: Measure;
     top: Measure;

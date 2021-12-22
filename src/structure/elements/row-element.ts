@@ -1,9 +1,9 @@
 import {BasicElement} from "./basic-element";
-import {ColumnAttributes} from "./attributes/column-attributes";
-import {ColumnEvents} from "./events/column-events";
+import {RowAttributes} from "./attributes/row-attributes";
+import {RowEvents} from "./events/row-events";
 import {BasicAttributes} from "./attributes/basic-attributes";
 import {BasicEvents} from "./events/basic-events";
 
-export interface ColumnElement extends BasicElement<ColumnAttributes, ColumnEvents>{
+export interface RowElement extends BasicElement<RowAttributes, RowEvents> {
     children: BasicElement<BasicAttributes, BasicEvents>[];
 }

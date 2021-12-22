@@ -4,6 +4,9 @@ import {ElementRaw} from "./types-raw";
 import {BasicEvents} from "./elements/events/basic-events";
 import {ServerDrivenElement} from "./elements/server-driven.element";
 import {ButtonElement} from "./elements/button-element";
+import {UnknownElement} from "./elements/unknown-element";
+import {RowElement} from "./elements/row-element";
+import {ColumnElement} from "./elements/column.element";
 
 
 type RegistryBuilder = {nameMatch: string, type: ElementType};
@@ -20,8 +23,60 @@ export class Extractor {
       type: 'column'
     },
     {
+      nameMatch: 'Checkbox|checkbox|CheckBox|check-box',
+      type: 'checkbox'
+    },
+    {
+      nameMatch: 'column',
+      type: 'column'
+    },
+    {
+      nameMatch: 'DatePicker|Datepicker|date-picker|datepicker',
+      type: 'datePicker'
+    },
+    {
+      nameMatch: 'Dropdown|DropDown|drop-down|dropdown',
+      type: 'dropdown'
+    },
+    {
+      nameMatch: 'Form|form',
+      type: 'form'
+    },
+    {
+      nameMatch: 'ImagePicker|Imagepicker|image-picker|imagepicker',
+      type: 'imagePicker'
+    },
+    {
+      nameMatch: 'Row|row',
+      type: 'row'
+    },
+    {
       nameMatch: 'ServerDriven|server-driven',
       type: 'server-driven'
+    },
+    {
+      nameMatch: 'SignaturePad|Signaturepad|signature-pad|signaturepad',
+      type: 'signaturePad'
+    },
+    {
+      nameMatch: 'Switch|switch',
+      type: 'switch'
+    },
+    {
+      nameMatch: 'TagEditor|Tageditor|tag-editor|tageditor',
+      type: 'tagEditor'
+    },
+    {
+      nameMatch: 'Text|text',
+      type: 'text'
+    },
+    {
+      nameMatch: 'TextField|Textfield|text-field|textfield',
+      type: 'textField'
+    },
+    {
+      nameMatch: 'TimePicker|Timepicker|time-picker|timepicker',
+      type: 'timePicker'
     }
   ];
 
@@ -71,7 +126,6 @@ export class Extractor {
           onMouseEnter,
           onMouseLeave
         },
-        children: childrenElements,
         type
       };
 
@@ -81,6 +135,7 @@ export class Extractor {
         case 'checkbox':
           break;
         case 'column':
+          (baseElementStructure as ColumnElement).children = childrenElements;
           break;
         case 'datePicker':
           break;
@@ -91,9 +146,11 @@ export class Extractor {
         case 'imagePicker':
           break;
         case 'row':
+          (baseElementStructure as RowElement).children = childrenElements;
           break;
         case 'server-driven':
           (baseElementStructure as ServerDrivenElement).version = attributes.version ?? '1.0.0';
+          (baseElementStructure as ServerDrivenElement).child = childrenElements.length > 0 ? childrenElements[0] : null;
           break;
         case 'signaturePad':
           break;
@@ -109,6 +166,9 @@ export class Extractor {
           break;
         case 'unknown':
           break;
+        default:
+          /// UNKNOWN ELEMENT ALSO
+          break;
       }
 
       return baseElementStructure;
@@ -118,7 +178,7 @@ export class Extractor {
         attributes: null,
         events: null,
         children: []
-      };
+      } as UnknownElement;
     }
   }
 

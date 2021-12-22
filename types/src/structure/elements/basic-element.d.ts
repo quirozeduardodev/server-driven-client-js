@@ -4,6 +4,5 @@ export declare type ElementType = 'unknown' | 'server-driven' | 'form' | 'column
 export interface BasicElement<TAttributes extends BasicAttributes, TEvents extends BasicEvents> {
     attributes: TAttributes | null;
     events: TEvents | null;
-    children: BasicElement<BasicAttributes, BasicEvents>[];
     type: ElementType;
 }

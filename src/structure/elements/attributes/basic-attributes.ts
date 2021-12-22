@@ -5,7 +5,7 @@ export interface BasicAttributes {
   height?: Measure;
   backgroundColor?: Color;
 }
-export type MeasureType = 'px' | 'percentage' | 'em' | 'rem';
+export type MeasureType = 'px' | '%' | 'em' | 'rem';
 export class AttLTRB {
   public left: Measure = new Measure(0, 'px');
   public top: Measure = new Measure(0, 'px');
@@ -94,7 +94,7 @@ export class Measure {
           measureType = 'px';
           break;
         case '%':
-          measureType = 'percentage';
+          measureType = '%';
           break;
         case 'rem':
           measureType = 'rem';
