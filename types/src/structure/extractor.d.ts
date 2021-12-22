@@ -11,6 +11,10 @@ export declare class Extractor {
     static extract(root: {
         elements?: ElementRaw[];
     } | null): Promise<BasicElement<BasicAttributes, BasicEvents> | null>;
-    private static _extract;
+    private static _extractElement;
+    private static _extractOptions;
+    private static _extractOption;
+    private static _extractText;
+    private static _extractElements;
 }
 export {};

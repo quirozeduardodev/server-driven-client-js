@@ -7,6 +7,9 @@ import {ButtonElement} from "./elements/button-element";
 import {UnknownElement} from "./elements/unknown-element";
 import {RowElement} from "./elements/row-element";
 import {ColumnElement} from "./elements/column.element";
+import {TextElement} from "./elements/text-element";
+import {ElementOption} from "./elements/content/element-option";
+import {DropdownElement} from "./elements/dropdown-element";
 
 
 type RegistryBuilder = {nameMatch: string, type: ElementType};
@@ -81,11 +84,10 @@ export class Extractor {
   ];
 
   public static async extract(root: {elements?: ElementRaw[]} | null): Promise<BasicElement<BasicAttributes, BasicEvents> | null> {
-    return root && root.elements ? (root.elements.length > 0 ? await Extractor._extract(root.elements[0]) : null) : null;
+    return root && root.elements ? (root.elements.length > 0 ? await Extractor._extractElement(root.elements[0]) : null) : null;
   }
 
-
-  private static async _extract(elementRaw: ElementRaw): Promise<BasicElement<BasicAttributes, BasicEvents>> {
+  private static async _extractElement(elementRaw: ElementRaw): Promise<BasicElement<BasicAttributes, BasicEvents>> {
     const idx = Extractor.registry.findIndex(value => elementRaw.name.match(value.nameMatch));
     if (idx >= 0) {
 
@@ -106,12 +108,6 @@ export class Extractor {
       const backgroundColor = await Color.fromString(attributes.backgroundColor ?? '');
 
       const children = elementRaw.elements ?? [];
-
-      const childrenElements: BasicElement<BasicAttributes, BasicEvents>[] = [];
-
-      for (const child of children) {
-        await childrenElements.push(await this._extract(child));
-      }
 
       const baseElementStructure = {
         attributes: {
@@ -135,22 +131,23 @@ export class Extractor {
         case 'checkbox':
           break;
         case 'column':
-          (baseElementStructure as ColumnElement).children = childrenElements;
+          (baseElementStructure as ColumnElement).children = await this._extractElements(children);
           break;
         case 'datePicker':
           break;
         case 'dropdown':
+          (baseElementStructure as DropdownElement).options = await this._extractOptions(children);
           break;
         case 'form':
           break;
         case 'imagePicker':
           break;
         case 'row':
-          (baseElementStructure as RowElement).children = childrenElements;
+          (baseElementStructure as RowElement).children = await this._extractElements(children);
           break;
         case 'server-driven':
           (baseElementStructure as ServerDrivenElement).version = attributes.version ?? '1.0.0';
-          (baseElementStructure as ServerDrivenElement).child = childrenElements.length > 0 ? childrenElements[0] : null;
+          (baseElementStructure as ServerDrivenElement).child = children.length > 0 ? await this._extractElement(children[0]) : null;
           break;
         case 'signaturePad':
           break;
@@ -159,6 +156,8 @@ export class Extractor {
         case 'tagEditor':
           break;
         case 'text':
+          // (baseElementStructure as TextElement).text = childrenElements;
+          console.log(children);
           break;
         case 'textField':
           break;
@@ -182,4 +181,43 @@ export class Extractor {
     }
   }
 
+  private static async _extractOptions(elementsRaw: ElementRaw[]): Promise<ElementOption<any>[]> {
+    const options: ElementOption<any>[] = [];
+
+    for (const opt of elementsRaw) {
+      await options.push(await this._extractOption(opt));
+    }
+    return options;
+  }
+
+  private static async _extractOption(elementRaw: ElementRaw): Promise<ElementOption<any>> {
+    if(elementRaw || !elementRaw.name.match('option|Option')) {
+      throw Error(`${elementRaw.name} is not a valid option`);
+    }
+    const attributes = elementRaw.attributes ?? {};
+    return {
+      value: attributes.value ?? null,
+      label: attributes.label ?? ''
+    };
+  }
+
+  private static async _extractText(elementRaw: ElementRaw): Promise<ElementOption<any>> {
+    if(elementRaw || !elementRaw.name.match('option|Option')) {
+      throw Error(`${elementRaw.name} is not a valid option`);
+    }
+    const attributes = elementRaw.attributes ?? {};
+    return {
+      value: attributes.value ?? null,
+      label: attributes.label ?? ''
+    };
+  }
+
+  private static async _extractElements(elementsRaw: ElementRaw[]): Promise<BasicElement<BasicAttributes, BasicEvents>[]> {
+    const childrenElements: BasicElement<BasicAttributes, BasicEvents>[] = [];
+
+    for (const child of elementsRaw) {
+      await childrenElements.push(await this._extractElement(child));
+    }
+    return childrenElements;
+  }
 }
