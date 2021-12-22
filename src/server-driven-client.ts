@@ -65,7 +65,7 @@ export class ServerDrivenClient {
         }
         if (this._controllerScript && this._xml && this._className) {
             globalScript += ` ${this._controllerScript} `
-            this._controllerInstance = await eval(`(function (){${globalScript} return new ${this._className}})()`);
+            this._controllerInstance = await eval(`(function (){${globalScript} return new ${this._className}()})()`);
             this._controllerInstance.setState = (state: { [p: string]: any;}) => {
                 this.rebuild(state);
             };
