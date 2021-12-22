@@ -3,7 +3,7 @@ import { BasicAttributes } from "./elements/attributes/basic-attributes";
 import { ElementRaw } from "./types-raw";
 import { BasicEvents } from "./elements/events/basic-events";
 declare type RegistryBuilder = {
-    nameMatch: string;
+    nameMatch: RegExp;
     type: ElementType;
 };
 export declare class Extractor {
