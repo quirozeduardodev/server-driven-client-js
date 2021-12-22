@@ -156,8 +156,7 @@ export class Extractor {
         case 'tagEditor':
           break;
         case 'text':
-          // (baseElementStructure as TextElement).text = childrenElements;
-          console.log(children);
+          (baseElementStructure as TextElement).text = children.length > 0 ? await this._extractText(children[0]) : '';
           break;
         case 'textField':
           break;
@@ -201,15 +200,11 @@ export class Extractor {
     };
   }
 
-  private static async _extractText(elementRaw: ElementRaw): Promise<ElementOption<any>> {
-    if(elementRaw || !elementRaw.name.match('option|Option')) {
-      throw Error(`${elementRaw.name} is not a valid option`);
+  private static async _extractText(elementRaw: ElementRaw): Promise<string> {
+    if(elementRaw || !elementRaw.type.match('text')) {
+      throw Error(`${elementRaw.type} is not a valid text`);
     }
-    const attributes = elementRaw.attributes ?? {};
-    return {
-      value: attributes.value ?? null,
-      label: attributes.label ?? ''
-    };
+    return elementRaw.text ?? '';
   }
 
   private static async _extractElements(elementsRaw: ElementRaw[]): Promise<BasicElement<BasicAttributes, BasicEvents>[]> {
