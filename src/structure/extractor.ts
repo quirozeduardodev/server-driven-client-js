@@ -1,5 +1,12 @@
 import {BasicElement, ElementType} from "./elements/basic-element";
-import {AttLTRB, BasicAttributes, Color} from "./elements/attributes/basic-attributes";
+import {
+  AttLTRB,
+  BasicAttributes,
+  Border,
+  BorderLTBR,
+  BorderRadius,
+  Color
+} from "./elements/attributes/basic-attributes";
 import {ElementRaw} from "./types-raw";
 import {BasicEvents} from "./elements/events/basic-events";
 import {ServerDrivenElement} from "./elements/server-driven.element";
@@ -99,9 +106,20 @@ export class Extractor {
       const onMouseEnter = attributes.onMouseEnter ?? null;
       const onMouseLeave = attributes.onMouseLeave ?? null;
 
+      /*
+      Extract all basic attributes
+       */
       const margin = await AttLTRB.fromString(attributes.margin ?? '0px');
       const padding = await AttLTRB.fromString(attributes.padding ?? '0px');
       const backgroundColor = await Color.fromString(attributes.backgroundColor ?? '');
+      const borderGlobal = await Border.fromString(attributes.border ?? '');
+      const borderLeft = attributes.borderLeft ? await Border.fromString(attributes.border) : null;
+      const borderTop = attributes.borderTop ? await Border.fromString(attributes.border) : null;
+      const borderRight = attributes.borderRight ? await Border.fromString(attributes.border) : null;
+      const borderBottom = attributes.borderBottom ? await Border.fromString(attributes.border) : null;
+      const borderRadius = await BorderRadius.fromString(attributes.borderRadius ?? '');
+
+      const border: BorderLTBR = new BorderLTBR(borderLeft ?? borderGlobal, borderTop ?? borderGlobal, borderRight ?? borderGlobal, borderBottom ?? borderGlobal, borderRadius);
 
       const children = elementRaw.elements ?? [];
 
@@ -109,7 +127,8 @@ export class Extractor {
         attributes: {
           padding,
           margin,
-          backgroundColor
+          backgroundColor,
+          border
         },
         events: {
           onClick,
