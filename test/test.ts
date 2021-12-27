@@ -1,6 +1,6 @@
 import {ServerDrivenClient} from "../src";
 
-class TestXml {
+class Test {
 
     xml = `
         <ServerDriven version="1.0.0">
@@ -43,7 +43,17 @@ class TestXml {
 
     public run(): void {
         const sd: ServerDrivenClient =  new ServerDrivenClient(this.xml, this.classJs, 'Test');
+        sd.view.subscribe(value => {
+          console.log(value);
+        });
+        setTimeout(args => {
+
+        }, 500);
     }
 
 
 }
+
+const test = new Test();
+test.run();
+console.log('Done');
